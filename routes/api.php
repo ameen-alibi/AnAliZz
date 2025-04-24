@@ -10,7 +10,5 @@ Route::post('/register', [AuthController::class, 'register'])
 Route::post('/login', [AuthController::class, 'login'])
     ->middleware('api-key');
 
-
-// Route::middleware('auth:sanctum')->group(function () {
-//     Route::get('/user', [UserController::class, 'show']);
-// });
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->middleware('auth:sanctum');

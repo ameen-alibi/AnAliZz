@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -56,5 +57,22 @@ class AuthController extends Controller
         }
 
         return response()->json(['message' => 'Login Failed !'], 401);
+    }
+
+    public function logout(Request $request)
+    {
+        try {
+            $user = $request->user();
+
+            if ($user) {
+                $request->user()->currentAccessToken()->delete();
+                return response()->json(['message' => 'Logged out successfully'], 200);
+            }
+
+            return response()->json(['message' => 'Unauthenticated'], 401);
+        } catch (\Exception $e) {
+            Log::error('Logout error: ' . $e->getMessage());
+            return response()->json(['message' => 'An error occurred'], 500);
+        }
     }
 }
