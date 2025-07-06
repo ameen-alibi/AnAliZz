@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class metric extends Model
+class Metric extends Model
 {
-    //
+    protected $guarded = [];
 }
