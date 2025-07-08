@@ -8,12 +8,12 @@ class Website extends Model
 {
     protected $guarded = [];
 
-    public function event()
+    public function events()
     {
         return $this->hasMany(Event::class);
     }
 
-    public function metric()
+    public function metrics()
     {
         return $this->hasMany(Metric::class);
     }

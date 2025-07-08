@@ -23,6 +23,7 @@ return new class extends Migration
             $table->json('payload')->nullable();
             $table->string('country_code', 2)->nullable();
             $table->string('country_name', 100)->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
 
             $table->index(['website_id', 'event_type']);

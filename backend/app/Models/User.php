@@ -47,7 +47,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function website()
+    public function websites()
     {
         return $this->hasMany(Website::class);
     }
