@@ -26,6 +26,11 @@ class WebsiteController extends Controller
             ->get();
     }
 
+    public function show(Request $req, Website $website)
+    {
+        $this->authorize('view', $website);
+        return $website->only(['id', 'name', 'domain', 'tracking_token', 'created_at']);
+    }
 
     public function store(Request $req)
     {
