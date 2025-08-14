@@ -17,8 +17,9 @@ Route::post('/track', [TrackerController::class, 'track']);
 Route::post('/track', [TrackerController::class, 'store'])->middleware('throttle:60,1');
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [LoginController::class, 'logout']);
     Route::get('/sites', [WebsiteController::class, 'index']);
-    Route::post('/sites', [WebsiteController::class, 'store']);
+    Route::post('/sites/store', [WebsiteController::class, 'store']);
     Route::get('/sites/{id}', [WebsiteController::class, 'show']);
     Route::get('/sites/{id}/stats', [WebsiteController::class, 'stats']);
 });

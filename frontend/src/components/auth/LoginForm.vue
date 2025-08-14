@@ -1,11 +1,66 @@
+<script setup>
+import { ref } from 'vue';
+import { useVuelidate } from '@vuelidate/core';
+import { required, email } from '@vuelidate/validators';
+import { EnvelopeIcon, LockClosedIcon, EyeIcon } from '@heroicons/vue/24/outline';
+import { useRouter } from 'vue-router';
+import api from '@/lib/api';
+
+const form = ref({
+    email: '',
+    password: '',
+    remember: false
+});
+
+const rules = {
+    email: { required, email },
+    password: { required }
+};
+
+const v$ = useVuelidate(rules, form)
+const showPassword = ref(false)
+const loading = ref(false)
+const errorMessage = ref('')
+const router = useRouter()
+
+const handleSubmit = async () => {
+    v$.value.$touch();
+    if (v$.value.$invalid) return;
+
+    loading.value = true;
+
+    try {
+        const response = await api.post('http://localhost:8000/api/login', {
+            email: form.value.email,
+            password: form.value.password,
+            remember: form.value.remember,
+            device_name: `VueLoginApp (${navigator.platform})`
+        });
+        const token = response.data.token;
+        localStorage.setItem('token', token);
+        router.push('/dashboard')
+
+    } catch (error) {
+        const errors = error.response?.data
+        if (errors) {
+            errorMessage.value = errors.message
+        } else {
+            errorMessage.value = 'An unexpected error occurred.'
+        }
+    } finally {
+        loading.value = false;
+    }
+}
+
+</script>
+
+
 <template>
     <div class="relative min-h-screen flex items-center justify-center">
 
-        <!-- Background Image -->
         <div class="absolute inset-0 bg-[url('@/assets/login-bg.svg')] bg-cover bg-center bg-no-repeat z-0">
         </div>
 
-        <!-- Glass Card -->
         <div
             class="relative z-10 w-full max-w-md md:max-w-lg p-10 mx-auto md:mr-auto md:ml-20 md:mx-0 animate-fade-in-up">
             <header class="mb-10 text-center md:text-left">
@@ -16,7 +71,6 @@
             </header>
 
             <form @submit.prevent="handleSubmit" novalidate class="space-y-6">
-                <!-- Email -->
                 <div>
                     <label class="block text-white/90 mb-1">Email</label>
                     <div class="relative">
@@ -28,7 +82,6 @@
                     <span v-if="v$.email.$error" class="text-sm text-red-300">Valid email is required</span>
                 </div>
 
-                <!-- Password -->
                 <div>
                     <div class="flex justify-between mb-1">
                         <label class="text-white/90">Password</label>
@@ -45,20 +98,20 @@
                     <span v-if="v$.password.$error" class="text-sm text-red-300">Password is required</span>
                 </div>
 
-                <!-- Remember me -->
                 <div class="flex items-center">
                     <input id="remember" type="checkbox" class="rounded text-cyan-400 focus:ring-cyan-400"
                         v-model="form.remember" />
                     <label for="remember" class="ml-2 text-white/90">Remember me</label>
                 </div>
 
-                <!-- Submit -->
                 <button type="submit"
                     class="w-full py-3 bg-gradient-to-r from-[#485461] to-[#28313B] hover:scale-105 transition-transform duration-300 text-white rounded-xl font-medium"
                     :disabled="loading">
                     <span v-if="loading">Signing in...</span>
                     <span v-else>Sign In</span>
                 </button>
+
+                <p v-if="errorMessage" class="text-sm text-red-300 mt-2">{{ errorMessage }}</p>
             </form>
 
             <!-- TODO -->
@@ -82,64 +135,13 @@
                 </div>
             </div> -->
 
-            <!-- Footer -->
             <p class="text-center mt-8 text-white/90">
                 Don't have an account?
-                <a href="#" class="text-cyan-300 hover:underline">Sign up</a>
+                <a href="/register" class="text-cyan-300 hover:underline">Sign up</a>
             </p>
         </div>
     </div>
 </template>
-
-<script setup>
-import { ref } from 'vue';
-import axios from 'axios';
-import { useVuelidate } from '@vuelidate/core';
-import { required, email } from '@vuelidate/validators';
-import { EnvelopeIcon, LockClosedIcon, EyeIcon } from '@heroicons/vue/24/outline';
-
-const form = ref({
-    email: '',
-    password: '',
-    remember: false
-});
-
-const rules = {
-    email: { required, email },
-    password: { required }
-};
-
-const v$ = useVuelidate(rules, form);
-const showPassword = ref(false);
-const loading = ref(false);
-
-const handleSubmit = async () => {
-    v$.value.$touch();
-    if (v$.value.$invalid) return;
-
-    loading.value = true;
-
-    try {
-        const response = await axios.post('http://localhost:8000/api/login', {
-            email: form.value.email,
-            password: form.value.password,
-            remember: form.value.remember,
-            device_name: `VueLoginApp (${navigator.platform})`
-        });
-
-        const token = response.data.token;
-        localStorage.setItem('token', token);
-        alert('Login successful!');
-    } catch (error) {
-        alert('Login failed: ' + (error.response?.data?.message || 'Invalid credentials'));
-    } finally {
-        // This ensures loading is always reset even if an error occurs
-        loading.value = false;
-    }
-}
-
-</script>
-
 
 <style scoped>
 @keyframes fade-in-up {
