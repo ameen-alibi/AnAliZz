@@ -43,6 +43,7 @@ const handleSubmit = async () => {
 
 <template>
     <div class="absolute inset-0 bg-[#071E22] flex justify-center items-center">
+        <Navbar />
         <div class="w-full max-w-md p-6 rounded-2xl shadow-lg bg-white/10 backdrop-blur-md border border-white/20">
             <h2 class="text-2xl font-semibold text-white mb-6 text-center">
                 Add a New Website
@@ -53,7 +54,7 @@ const handleSubmit = async () => {
                     <label for="name" class="block text-sm font-medium text-gray-200 mb-1">
                         Website Name
                     </label>
-                    <input id="name" v-model="form.name" type="text" placeholder="My Awesome Site"
+                    <input id="name" v-model="form.name" type="text" placeholder="Example Site"
                         class="w-full p-3 rounded-lg bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FD7A34]" />
                     <span v-if="v$.name.$error" class="mt-2 text-sm text-red-300">Website name is required</span>
                 </div>

@@ -40,13 +40,12 @@ const handleSubmit = async () => {
     errorMessage.value = '';
 
     try {
-        const res = await api.post('http://localhost:8000/api/register', form.value);
+        const res = await api.post('/register', form.value);
         localStorage.setItem('token', res.data.token);
         router.push('/login');
     } catch (error) {
         const response = error.response?.data;
         if (response?.errors) {
-            // Show first validation error
             errorMessage.value = Object.values(response.errors)[0][0];
         } else {
             errorMessage.value = response?.message || 'An unexpected error occurred.';
