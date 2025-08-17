@@ -1,7 +1,7 @@
 <script setup>
 import api from '@/lib/api';
 import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 
 const sites = ref([]);
 const loading = ref(true);
@@ -39,14 +39,14 @@ onMounted(fetchSites);
 </script>
 
 <template>
-    <div class="min-h-screen bg-[#071E22] text-white p-8">
-        <Navbar />
+    <div class="min-h-screen bg-[#071E22] text-white p-8 relative">
         <h1 class="text-3xl font-bold mb-6">Your Websites</h1>
 
         <div v-if="loading" class="text-gray-400">Loading...</div>
         <div v-else-if="error" class="text-red-400">{{ error }}</div>
 
-        <table v-else class="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-lg overflow-hidden">
+        <table v-else
+            class="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-lg overflow-hidden mb-3">
             <thead>
                 <tr class="bg-white/20">
                     <th class="py-3 px-4 text-left">Name</th>
@@ -67,5 +67,9 @@ onMounted(fetchSites);
                 </tr>
             </tbody>
         </table>
+        <div class="absolute bottom-2 right-2">
+            <RouterLink to="/dashboard" class="text-orange-600 hover:text-white">Go back to dashboard</RouterLink>
+        </div>
     </div>
+
 </template>

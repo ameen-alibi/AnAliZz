@@ -42,7 +42,7 @@ const logout = async () => {
                 <img src="@/assets/dashboard-img-1.jpg" alt="Data Analysis 1" class="w-[400px] h-[400px] rounded-lg shadow-lg border border-white/20 
           -mb-24 mr-24 transition-all duration-300 transform-gpu hover:scale-105 z-20
           relative" />
-                <img src="@/assets/dashboard-img-2.jpg" alt="Data Analysis 2" class="w-[400px] h-[400px] rounded-lg shadow-lg border border-white/20 
+                <img src="@/assets/dashboard-img-1.jpg" alt="Data Analysis 2" class="w-[400px] h-[400px] rounded-lg shadow-lg border border-white/20 
           -mt-24 ml-24 transition-all duration-300 transform-gpu hover:scale-105 hover:z-20
           relative" />
             </div>

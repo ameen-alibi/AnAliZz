@@ -35,12 +35,6 @@ const routes = [
         component: () => import('@/pages/sites/SiteCreate.vue')
     },
     {
-        path: '/sites/:id',
-        name: 'SiteShow',
-        component: () => import('@/pages/sites/SiteShow.vue'),
-        props: true
-    },
-    {
         path: '/sites/:id/stats',
         name: 'SiteStats',
         component: () => import('@/pages/sites/SiteStats.vue'),
