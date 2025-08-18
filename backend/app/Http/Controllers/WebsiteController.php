@@ -32,21 +32,28 @@ class WebsiteController extends Controller
         return $website->only(['id', 'name', 'domain', 'tracking_token', 'created_at']);
     }
 
-    public function store(Request $req)
+    public function store(Request $request)
     {
-        $data = $req->validate([
-            'name'   => 'required|string|max:100',
-            'domain' => 'required|url',
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'domain' => 'required|url|max:255',
         ]);
 
-        $website = $req->user()->websites()->create([
-            'name'           => $data['name'],
-            'domain'         => $data['domain'],
+        $website = $request->user()->websites()->create([
+            'name' => $validated['name'],
+            'domain' => $validated['domain'],
             'tracking_token' => Str::uuid(),
         ]);
 
-        return response()->json($website, 201);
+        return response()->json([
+            'message' => 'Website created successfully',
+            'tracking_token' => $website->tracking_token,
+            'tracking_snippet' => view('tracking.snippet', [
+                'tracking_token' => $website->tracking_token
+            ])->render()
+        ]);
     }
+
 
     public function stats(Request $req, Website $website)
     {
@@ -93,5 +100,22 @@ class WebsiteController extends Controller
                 'top_countries'      => $countries,
             ];
         });
+    }
+
+    public function delete(Request $request)
+    {
+        $website = $request->user()->websites();
+
+        if (! $website) {
+            return response()->json([
+                'message' => 'Site not found.'
+            ], 404);
+        }
+
+        $website->delete();
+
+        return response()->json([
+            'message' => 'Site deleted successfully.'
+        ]);
     }
 }

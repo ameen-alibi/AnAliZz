@@ -71,7 +71,7 @@ const handleSubmit = async () => {
                 <strong class="text-blue-400">Tracking Token:</strong> {{ tracking_token }}
             </p>
 
-            <pre class="rounded-lg overflow-x-auto max-h-60  bg-gray-800/70 p-4 border border-gray-700">
+            <pre class="rounded-lg overflow-y-auto max-h-60  bg-gray-800/70 p-4 border border-gray-700">
       <code class="language-javascript">{{ tracking_snippet }}</code>
     </pre>
 

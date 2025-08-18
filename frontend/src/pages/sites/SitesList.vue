@@ -21,15 +21,26 @@ const fetchSites = async () => {
 };
 
 const deleteSite = async (id) => {
-    if (!confirm('Are you sure you want to delete this site?')) return;
+    if (!confirm("Are you sure you want to delete this site?")) return;
 
     try {
         await api.delete(`/sites/${id}`);
-        sites.value = sites.value.filter(site => site.id !== id);
+        sites.value = sites.value.filter((site) => site.id !== id);
+
+        alertMessage.value = "Site deleted successfully!";
+        alertType.value = "success";
+
     } catch (e) {
-        alert('Failed to delete site.');
+        alertMessage.value = "Failed to delete site.";
+        alertType.value = "error";
     }
+
+    // auto-hide after 3s
+    setTimeout(() => {
+        alertMessage.value = null;
+    }, 3000);
 };
+
 
 const viewStats = (id) => {
     router.push(`/sites/${id}/stats`);
