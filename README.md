@@ -1,8 +1,8 @@
 # AnAliZz – Website Analytics Dashboard
 
 [![Vue 3](https://img.shields.io/badge/Vue-3.3.4-brightgreen?logo=vue.js&logoColor=white)](https://vuejs.org/)
-[![Laravel](https://img.shields.io/badge/Laravel-10-red?logo=laravel&logoColor=white)](https://laravel.com/)
-[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3-blue?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Laravel](https://img.shields.io/badge/Laravel-12-red?logo=laravel&logoColor=white)](https://laravel.com/)
+[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4.1-blue?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
 A lightweight web application to track and visualize your website visitors in real-time. Built with **Laravel** (backend API) and **Vue 3 + Tailwind CSS** (frontend SPA).
 
